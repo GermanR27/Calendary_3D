@@ -65,91 +65,11 @@ La separación es a propósito: **datos** (`data.js`), **lógica** (`state.js`),
 
 ---
 
-## 4. Cómo subirlo a GitHub **sin usar la terminal**
 
-1. Entra en [github.com](https://github.com) e inicia sesión.
-2. Arriba a la derecha pulsa **+ → New repository**.
-3. Ponle un nombre (por ejemplo `3d-business-planner`), déjalo **Public** y **no marques** "Add a README file" (ya tienes uno).
-4. Pulsa **Create repository**.
-5. En la página que aparece, haz clic en el enlace **uploading an existing file**
-   (o entra al repo y usa **Add file → Upload files**).
-6. Abre la carpeta `FINAL_GITHUB_UPLOAD` en tu explorador de archivos y **arrastra a la ventana del navegador**:
-   - el archivo `index.html`
-   - el archivo `style.css`
-   - el archivo `README.md`
-   - la carpeta `js`
-   - la carpeta `assets`
-
-   > ⚠️ Arrastra el **contenido** de `FINAL_GITHUB_UPLOAD`, no la carpeta entera. En el repositorio, `index.html` debe quedar en la raíz.
-   > Arrastrando carpetas, GitHub conserva la estructura interna automáticamente.
-7. Abajo escribe un mensaje (ej: `Primera versión del planner`) y pulsa **Commit changes**.
-
-Listo: el repositorio ya tiene el proyecto.
 
 ---
 
-## 5. Cómo conectarlo con Vercel
-
-1. Entra en [vercel.com](https://vercel.com) y pulsa **Sign up** / **Log in** → **Continue with GitHub**.
-2. En el panel, pulsa **Add New… → Project**.
-3. Busca tu repositorio (`3d-business-planner`) y pulsa **Import**.
-4. Vercel detectará que es un sitio estático. **No cambies nada**:
-   - Framework Preset: `Other`
-   - Build Command: *(vacío)*
-   - Output Directory: *(vacío)* o `.`
-   - Install Command: *(vacío)*
-5. Pulsa **Deploy** y espera unos segundos.
-6. Te dará una URL tipo `https://3d-business-planner.vercel.app`. Ábrela: ahí está la app.
-
-A partir de ahora, **cada vez que subas archivos nuevos a GitHub, Vercel vuelve a desplegar solo**.
-
----
-
-## 6. 🌐 Sala multijugador: editar el plan entre varios, en tiempo real
-
-Por defecto la app es local: cada navegador guarda su propia copia. Para que **los dos socios trabajen sobre el mismo plan y vean los cambios al instante**, hay que conectarla a una base de datos en tiempo real. Se hace **una sola vez**, desde la web, sin terminal.
-
-### Crear la base de datos (5 minutos, gratis)
-
-1. Entra en [console.firebase.google.com](https://console.firebase.google.com) con tu cuenta de Google.
-2. **Crear un proyecto** → ponle un nombre → puedes desactivar Google Analytics → **Crear**.
-3. En el menú lateral: **Compilación → Realtime Database** (⚠️ *Realtime Database*, **no** Firestore) → **Crear base de datos** → elige región → empieza en **modo de prueba**.
-4. Ve a **⚙ Configuración del proyecto → Tus apps → Web `</>`**, registra la app con cualquier apodo y **copia el bloque `firebaseConfig`** completo.
-
-### Conectar la app
-
-1. Abre la app y pulsa el botón **🌐 LOCAL** de la barra superior (o CONFIG → **CONFIGURAR SALA**).
-2. Rellena:
-   - **Tu nombre en la sala** (ej: `GERMÁN`) — es el que verá tu socio cuando hagas cambios.
-   - **Código de sala** — invéntalo y que sea **difícil de adivinar** (ej: `taller3d-x7k2-9f`). Los dos socios deben usar **exactamente el mismo**.
-   - **Configuración de Firebase** — pega el bloque tal cual, con llaves y todo.
-3. Pulsa **CONECTAR**. El botón pasará a **🟢 SALA** con el número de personas conectadas.
-4. Pásale a tu socio: la **URL de Vercel**, la **misma configuración** y el **mismo código de sala**.
-
-Desde ese momento: si alguien marca una tarea, crea una semana o cambia una prioridad, al resto le aparece sola con un aviso *"🌐 SOCIO 2 actualizó el plan"*.
-
-### Dejar las reglas permanentes
-
-El "modo de prueba" de Firebase **caduca a los 30 días**. Antes de que pase, ve a **Realtime Database → Reglas**, pega esto y pulsa **Publicar**:
-
-```json
-{
-  "rules": {
-    "rooms": {
-      "$sala": {
-        ".read": true,
-        ".write": true
-      }
-    }
-  }
-}
-```
-
-⚠️ Con estas reglas, **cualquiera que conozca el código de sala puede leer y escribir** el plan. Para un plan de trabajo interno es aceptable; no guardes ahí datos personales de clientes. Si más adelante queréis control de acceso real, habría que añadir autenticación de Firebase (eso ya requiere más trabajo).
-
----
-
-## 7. Cómo modificar tareas y semanas desde la app
+## 4. Cómo modificar tareas y semanas desde la app
 
 **Una tarea** — en ⚔️ TAREAS o dentro de una misión:
 
@@ -174,7 +94,7 @@ El "modo de prueba" de Firebase **caduca a los 30 días**. Antes de que pase, ve
 
 ---
 
-## 8. Limitaciones de esta primera versión
+## 5. Limitaciones de esta primera versión
 
 - **Sin login ni usuarios.** Quien tenga la URL (y el código de sala, si la usas) entra y edita.
 - **Modo local = un navegador.** Sin sala multijugador, los datos **no** viajan entre tu PC y tu móvil: usa EXPORTAR / IMPORTAR o conecta la sala.
@@ -186,7 +106,7 @@ El "modo de prueba" de Firebase **caduca a los 30 días**. Antes de que pase, ve
 
 ---
 
-## 9. Si quieres cambiar el código más adelante
+## 6. Si quieres cambiar el código más adelante
 
 - El **plan inicial** (el que se restaura con `↺ RESTAURAR PLAN DE 8 SEMANAS`) está en `js/data.js`.
 - Los **niveles, títulos, prioridades, estados y categorías**, en `js/config.js`.
